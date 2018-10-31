@@ -11,6 +11,9 @@ import android.widget.EditText;
 public class ControlCentre {
 
     Activity theActivity;
+    WebView webview;
+    Button loadPageButton;
+    EditText urlText;
 
     ControlCentre(Activity activity){
         theActivity = activity;
@@ -20,17 +23,17 @@ public class ControlCentre {
         theActivity.setContentView(R.layout.activity_main);
         Log.d("layout","layout loaded");
 
-        Button button = (Button) theActivity.findViewById(R.id.button);
-        final EditText edittext = (EditText) theActivity.findViewById(R.id.editText);
-        final WebView webview = (WebView) theActivity.findViewById(R.id.mainwebview);
+        loadPageButton = (Button) theActivity.findViewById(R.id.loadPageBtn);
+        urlText = (EditText) theActivity.findViewById(R.id.urlText);
+        webview = (WebView) theActivity.findViewById(R.id.mainwebview);
         Log.d("pull","pulled");
         webview.setWebViewClient(new WebViewClient());
 
-        button.setOnClickListener((new View.OnClickListener(){
+        loadPageButton.setOnClickListener((new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Log.d("click","has clicked");
-                String url = edittext.getText().toString();
+                String url = urlText.getText().toString();
                 Log.d("url",url);
                 webview.loadUrl(url);
 
@@ -38,6 +41,22 @@ public class ControlCentre {
 //                myWebView.loadUrl("http://www.example.com");
             }
         }));
+    }
+
+    public String getUrl(){
+        urlText=(EditText) theActivity.findViewById(R.id.urlText);
+        String url = urlText.getText().toString();
+        return url;
+    }
+
+    public void setUrl(String url){
+        webview.loadUrl(url);
+    }
+
+    public void resetLayout(){
+        theActivity.setContentView(R.layout.activity_main);
+        Log.d("layout","layout reloaded");
+
     }
 
 }

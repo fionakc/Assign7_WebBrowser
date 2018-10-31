@@ -8,6 +8,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,5 +20,28 @@ public class MainActivity extends AppCompatActivity {
 
         control = new ControlCentre(this);
         control.setupMainLayout();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        super.onSaveInstanceState(outState);
+        String urlToSave=control.getUrl();
+
+        outState.putString("Url",urlToSave);
+
+        Log.d("onSaveInst",urlToSave);
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        //control.resetLayout();
+        String url = savedInstanceState.getString("Url");
+        control.setUrl(url);
+
+        Log.d("onRestInst", url);
+
     }
 }
