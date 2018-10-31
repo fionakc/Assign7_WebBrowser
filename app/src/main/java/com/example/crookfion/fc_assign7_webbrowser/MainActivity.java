@@ -11,29 +11,13 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
+    ControlCentre control;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Log.d("layout","layout loaded");
 
-        Button button = (Button) findViewById(R.id.button);
-        final EditText edittext = (EditText) findViewById(R.id.editText);
-        final WebView webview = (WebView) findViewById(R.id.mainwebview);
-        Log.d("pull","pulled");
-        webview.setWebViewClient(new WebViewClient());
-
-        button.setOnClickListener((new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Log.d("click","has clicked");
-                String url = edittext.getText().toString();
-                Log.d("url",url);
-                webview.loadUrl(url);
-
-//                WebView myWebView = (WebView) findViewById(R.id.mainwebview);
-//                myWebView.loadUrl("http://www.example.com");
-            }
-        }));
+        control = new ControlCentre(this);
+        control.setupMainLayout();
     }
 }
