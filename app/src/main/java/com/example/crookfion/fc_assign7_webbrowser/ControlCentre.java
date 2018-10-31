@@ -3,6 +3,7 @@ package com.example.crookfion.fc_assign7_webbrowser;
 import android.app.Activity;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -15,6 +16,10 @@ public class ControlCentre {
     Button loadPageButton;
     EditText urlText;
 
+    Button backButton;
+    Button homeButton;
+    Button fwdButton;
+
     ControlCentre(Activity activity){
         theActivity = activity;
     }
@@ -24,9 +29,21 @@ public class ControlCentre {
         Log.d("layout","layout loaded");
 
         loadPageButton = (Button) theActivity.findViewById(R.id.loadPageBtn);
+
         urlText = (EditText) theActivity.findViewById(R.id.urlText);
         webview = (WebView) theActivity.findViewById(R.id.mainwebview);
+
+        backButton = (Button) theActivity.findViewById(R.id.backBtn);
+        homeButton = (Button) theActivity.findViewById(R.id.homeBtn);
+        fwdButton = (Button) theActivity.findViewById(R.id.fwdBtn);
+
+        //these two line allow javascript access in webview
+        WebSettings webSettings = webview.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
         Log.d("pull","pulled");
+
+        //opens links within webview
         webview.setWebViewClient(new WebViewClient());
 
         loadPageButton.setOnClickListener((new View.OnClickListener(){
@@ -41,7 +58,39 @@ public class ControlCentre {
 //                myWebView.loadUrl("http://www.example.com");
             }
         }));
-    }
+
+        backButton.setOnClickListener((new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Log.d("click","go back");
+                if (webview.canGoBack()) {
+                    webview.goBack();
+
+                }
+            }
+        }));
+
+        homeButton.setOnClickListener((new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Log.d("click","go home");
+                webview.loadUrl("https://www.google.com");
+
+            }
+        }));
+
+        fwdButton.setOnClickListener((new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Log.d("click","go forward");
+                if (webview.canGoForward()) {
+                    webview.goForward();
+
+                }
+            }
+        }));
+
+    } //end setup
 
     public String getUrl(){
         urlText=(EditText) theActivity.findViewById(R.id.urlText);
@@ -53,6 +102,7 @@ public class ControlCentre {
         webview.loadUrl(url);
     }
 
+    //maybe not use this method anymore
     public void resetLayout(){
         theActivity.setContentView(R.layout.activity_main);
         Log.d("layout","layout reloaded");
