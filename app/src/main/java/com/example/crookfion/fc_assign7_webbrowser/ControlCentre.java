@@ -137,10 +137,19 @@ public class ControlCentre {
     }
 
     public String checkForHttp(String url){
+
+        String newUrl;
+        if(url.startsWith("www.")||url.startsWith("http://") || url.startsWith("https://")){
+            newUrl=url;
+        } else{
+            newUrl="www."+url;
+        }
+
         if(url.startsWith("http://") || url.startsWith("https://")){
             return url;
         } else{
-            String newUrl = "https://"+url;
+            //not sure how to know if page need http or https
+            newUrl = "https://"+url;
             return newUrl;
         }
     }
@@ -164,6 +173,7 @@ public class ControlCentre {
         }
     }
 
+    //prob don't need this, funtionality moved to onPageFinished
     public void loadPageToBar(){
         Log.d("existing url",urlText.getText().toString());
         //String currentPage = webview.getUrl();
