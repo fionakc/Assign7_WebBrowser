@@ -57,7 +57,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        control.backButtonPressed();
-
+        boolean goesBack = control.backButtonPressed();
+        if(!goesBack){
+            super.onBackPressed();
+        }
     }
 }

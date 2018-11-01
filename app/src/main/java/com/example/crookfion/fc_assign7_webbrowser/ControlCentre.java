@@ -131,13 +131,17 @@ public class ControlCentre {
     } //end setup
 
 
-    public void backButtonPressed(){
+    public boolean backButtonPressed(){
+
+        boolean goesBack=false;
         if (webview.canGoBack()) {
             webview.goBack();
+            goesBack=true;
         }
 
         Log.d("geturl","gone back "+currentUrl);
         loadPageToBar();
+        return goesBack;
     }
 
 
