@@ -164,20 +164,31 @@ public class ControlCentre {
 
     public String checkForHttp(String url){
 
+        //note this method cannot handle direct ip calls
         String newUrl;
-        if(url.startsWith("www.")||url.startsWith("http://") || url.startsWith("https://")){
+
+        //if not a real url, do a google search of input
+        if(url.startsWith("http://www.") || url.startsWith("https://www.")){
             newUrl=url;
         } else{
-            newUrl="www."+url;
+            newUrl="https://www.google.com/search?q="+url;
         }
 
-        if(url.startsWith("http://") || url.startsWith("https://")){
-            return url;
-        } else{
-            //not sure how to know if page need http or https
-            newUrl = "https://"+url;
-            return newUrl;
-        }
+
+        return newUrl;
+//        if(url.startsWith("www.")||url.startsWith("http://") || url.startsWith("https://")){
+//            newUrl=url;
+//        } else{
+//            newUrl="www."+url;
+//        }
+//
+//        if(url.startsWith("http://") || url.startsWith("https://")){
+//            return url;
+//        } else{
+//            //not sure how to know if page need http or https
+//            newUrl = "https://"+url;
+//            return newUrl;
+//        }
     }
 
     private class MyWebViewClient extends WebViewClient {
