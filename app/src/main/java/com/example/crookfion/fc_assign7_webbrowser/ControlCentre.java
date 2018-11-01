@@ -34,16 +34,8 @@ public class ControlCentre {
 
     public void setupMainLayout(){
 
-        //code that will maybe remove top bar??
-//        theActivity.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        theActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        getSupportActionBar().hide();
-
         theActivity.setContentView(R.layout.activity_main);
         Log.d("layout","layout loaded");
-
-
 
         loadPageButton = (ImageButton) theActivity.findViewById(R.id.loadPageBtn);
 
@@ -83,6 +75,9 @@ public class ControlCentre {
 //                myWebView.loadUrl("http://www.example.com");
             }
         }));
+
+
+
 
         backButton.setOnClickListener((new View.OnClickListener(){
             @Override
@@ -134,6 +129,17 @@ public class ControlCentre {
 //            Log.d("current url", currentPage);
         }
     } //end setup
+
+
+    public void backButtonPressed(){
+        if (webview.canGoBack()) {
+            webview.goBack();
+        }
+
+        Log.d("geturl","gone back "+currentUrl);
+        loadPageToBar();
+    }
+
 
     public String getUrl(){
         urlText=(EditText) theActivity.findViewById(R.id.urlText);

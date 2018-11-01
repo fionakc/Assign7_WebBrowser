@@ -54,4 +54,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d("onRestInst", url);
 
     }
+
+    @Override
+    public void onBackPressed() {
+        control.backButtonPressed();
+
+    }
 }
