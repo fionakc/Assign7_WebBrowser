@@ -20,7 +20,7 @@ public class ControlCentre {
     Button homeButton;
     Button fwdButton;
 
-    String currentUrl="";
+    String currentUrl="https://www.google.com";
 
 
     ControlCentre(Activity activity){
@@ -55,9 +55,10 @@ public class ControlCentre {
             public void onClick(View view){
                 Log.d("click","has clicked");
                 String url = urlText.getText().toString();
-                Log.d("url",url);
+//                Log.d("geturl","before load "+webview.getUrl());
+                Log.d("geturl","before load "+currentUrl);
                 webview.loadUrl(checkForHttp(url));
-
+                Log.d("geturl","after load "+currentUrl);
                 loadPageToBar();
 //                String currentPage = webview.getUrl();
 //                urlText.setText(currentPage);
@@ -73,9 +74,12 @@ public class ControlCentre {
                 Log.d("click","go back");
                 if (webview.canGoBack()) {
                     webview.goBack();
-                    loadPageToBar();
+//                    Log.d("geturl","gone back "+webview.getUrl());
+//                    loadPageToBar();
                 }
                 //Log.d("current url",currentUrl);
+                Log.d("geturl","gone back "+currentUrl);
+                loadPageToBar();
             }
         }));
 
@@ -85,6 +89,7 @@ public class ControlCentre {
                 Log.d("click","go home");
                 webview.loadUrl("https://www.google.com");
                 //Log.d("current url",currentUrl);
+                Log.d("geturl","gone home "+currentUrl);
                 loadPageToBar();
 
             }
@@ -96,6 +101,7 @@ public class ControlCentre {
                 Log.d("click","go forward");
                 if (webview.canGoForward()) {
                     webview.goForward();
+                    Log.d("geturl","gone forward "+currentUrl);
                     loadPageToBar();
                 }
                 //Log.d("current url",currentUrl);
@@ -104,11 +110,13 @@ public class ControlCentre {
 
         //Log.d("current url",currentUrl);
         //these two lines cause a crash
-//        if(webview.getUrl() !=null) {
-//            loadPageToBar();
-////            String currentPage = webview.getUrl();
-////            Log.d("current url", currentPage);
-//        }
+        if(webview.getUrl() !=null) {
+            Log.d("geturl","loading page "+currentUrl);
+
+            loadPageToBar();
+//            String currentPage = webview.getUrl();
+//            Log.d("current url", currentPage);
+        }
     } //end setup
 
     public String getUrl(){
@@ -140,16 +148,27 @@ public class ControlCentre {
     private class MyWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            //currentUrl=url;
+            currentUrl=url;
+            //return true;
+
+            //have to use this, else doesn't work, can't use above
             return super.shouldOverrideUrlLoading(view, url);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            Log.d("WebView", "your current url when webpage loading.. finish" + url);
+            currentUrl=url;
+            urlText.setText(currentUrl);
+            super.onPageFinished(view, url);
         }
     }
 
     public void loadPageToBar(){
         Log.d("existing url",urlText.getText().toString());
-        String currentPage = webview.getUrl();
-        urlText.setText(currentPage);
-        Log.d("current url",currentPage);
+        //String currentPage = webview.getUrl();
+        //urlText.setText(currentUrl);
+        Log.d("current url",currentUrl);
     }
 }
 
