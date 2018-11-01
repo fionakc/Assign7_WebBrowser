@@ -199,6 +199,7 @@ public class ControlCentre {
         }
 
         //this method works instead of onPageFinished, but doesn't give as nice of a urltext experience
+        //and maybe causes the emulator to crash
 //        @Override
 //        public void onLoadResource(WebView view, String url){
 //            Log.d("WebView", "onLoadResource  " + url);

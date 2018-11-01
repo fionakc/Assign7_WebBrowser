@@ -9,10 +9,10 @@
     <EditText
         android:id="@+id/urlText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:layout_toLeftOf="@id/loadPageBtn"
         android:layout_weight="1"
         android:ems="10"
@@ -20,8 +20,8 @@
 
     <ImageButton
         android:id="@+id/loadPageBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         app:srcCompat="@drawable/ic_loadpage_icon" />
@@ -40,27 +40,27 @@
 
     <ImageButton
         android:id="@+id/backBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
         app:srcCompat="@drawable/ic_back_icon" />
 
     <ImageButton
         android:id="@+id/homeBtn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@id/fwdBtn"
         android:layout_toRightOf="@id/backBtn"
-        android:layout_alignParentBottom="true"
         app:srcCompat="@drawable/ic_house_icon" />
 
     <ImageButton
         android:id="@+id/fwdBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         app:srcCompat="@drawable/ic_forward_icon" />
 
 </RelativeLayout>
