@@ -1,24 +1,29 @@
 package com.example.crookfion.fc_assign7_webbrowser;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 public class ControlCentre {
 
     Activity theActivity;
     WebView webview;
-    Button loadPageButton;
+    ImageButton loadPageButton;
     EditText urlText;
 
-    Button backButton;
-    Button homeButton;
-    Button fwdButton;
+    ImageButton backButton;
+    ImageButton homeButton;
+    ImageButton fwdButton;
 
     String currentUrl="https://www.google.com";
 
@@ -28,17 +33,26 @@ public class ControlCentre {
     }
 
     public void setupMainLayout(){
+
+        //code that will maybe remove top bar??
+//        theActivity.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        theActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getSupportActionBar().hide();
+
         theActivity.setContentView(R.layout.activity_main);
         Log.d("layout","layout loaded");
 
-        loadPageButton = (Button) theActivity.findViewById(R.id.loadPageBtn);
+
+
+        loadPageButton = (ImageButton) theActivity.findViewById(R.id.loadPageBtn);
 
         urlText = (EditText) theActivity.findViewById(R.id.urlText);
         webview = (WebView) theActivity.findViewById(R.id.mainwebview);
 
-        backButton = (Button) theActivity.findViewById(R.id.backBtn);
-        homeButton = (Button) theActivity.findViewById(R.id.homeBtn);
-        fwdButton = (Button) theActivity.findViewById(R.id.fwdBtn);
+        backButton = (ImageButton) theActivity.findViewById(R.id.backBtn);
+        homeButton = (ImageButton) theActivity.findViewById(R.id.homeBtn);
+        fwdButton = (ImageButton) theActivity.findViewById(R.id.fwdBtn);
 
         //these two line allow javascript access in webview
         WebSettings webSettings = webview.getSettings();
@@ -50,9 +64,11 @@ public class ControlCentre {
         webview.setWebViewClient(new MyWebViewClient());
         //currentUrl = webview.getUrl();
 
+
         loadPageButton.setOnClickListener((new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                closeKeyboard();
                 Log.d("click","has clicked");
                 String url = urlText.getText().toString();
 //                Log.d("geturl","before load "+webview.getUrl());
@@ -179,6 +195,19 @@ public class ControlCentre {
         //String currentPage = webview.getUrl();
         //urlText.setText(currentUrl);
         Log.d("current url",currentUrl);
+    }
+
+    private void closeKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager)theActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(theActivity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+    }
+
+    private void openKeyboard() {
+        InputMethodManager imm = (InputMethodManager) theActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if(imm != null){
+            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
+        }
     }
 }
 
