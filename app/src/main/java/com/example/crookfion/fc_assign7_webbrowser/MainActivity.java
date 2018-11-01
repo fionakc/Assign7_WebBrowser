@@ -30,31 +30,50 @@ public class MainActivity extends AppCompatActivity {
         control.setupMainLayout();
     }
 
+//    @Override
+////    public void onSaveInstanceState(Bundle outState) {
+////
+////        super.onSaveInstanceState(outState);
+////        String urlToSave=control.getUrl();
+////
+////        outState.putString("Url",urlToSave);
+////
+////        Log.d("onSaveInst",urlToSave);
+////
+////    }
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        String urlToSave=control.getUrl();
-
-        outState.putString("Url",urlToSave);
-
-        Log.d("onSaveInst",urlToSave);
-
+        Bundle bundle = new Bundle();
+        ((WebView) findViewById(R.id.mainwebview)).saveState(bundle);
+        outState.putBundle("webViewState", bundle);
+        Log.d("onSaveInst","new save inst");
     }
 
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        //control.resetLayout();
+//        String url = savedInstanceState.getString("Url");
+//
+//
+//        control.setUrl(url);
+//
+//        Log.d("onRestInst", url);
+//
+//    }
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        //control.resetLayout();
-        String url = savedInstanceState.getString("Url");
 
-
-        control.setUrl(url);
-
-        Log.d("onRestInst", url);
-
+        if (savedInstanceState != null)
+            ((WebView) findViewById(R.id.mainwebview)).restoreState(savedInstanceState.getBundle("webViewState"));
+        else {
+//            webView = (WebView) findViewById(R.id.mainwebview);
+//            webView.loadUrl("https://www.YAHOO.com/");
+            control.setUrl("https://www.google.com");
+        }
     }
-
     @Override
     public void onBackPressed() {
         boolean goesBack = control.backButtonPressed();
