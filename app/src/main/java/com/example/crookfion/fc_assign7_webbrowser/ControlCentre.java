@@ -197,6 +197,15 @@ public class ControlCentre {
             urlText.setText(currentUrl);
             super.onPageFinished(view, url);
         }
+
+        //this method works instead of onPageFinished, but doesn't give as nice of a urltext experience
+//        @Override
+//        public void onLoadResource(WebView view, String url){
+//            Log.d("WebView", "onLoadResource  " + url);
+//            currentUrl=url;
+//            urlText.setText(currentUrl);
+//            super.onLoadResource(view, url);
+//        }
     }
 
     //prob don't need this, funtionality moved to onPageFinished
