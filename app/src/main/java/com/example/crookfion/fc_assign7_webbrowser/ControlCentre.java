@@ -10,9 +10,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class ControlCentre {
 
@@ -27,6 +31,7 @@ public class ControlCentre {
 
     String currentUrl="https://www.google.com";
 
+    ListView listview;
 
     ControlCentre(Activity activity){
         theActivity = activity;
@@ -78,10 +83,11 @@ public class ControlCentre {
 
 
 
-
+        //repurpose temp to get listview to work
         backButton.setOnClickListener((new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                //loadHistory();
                 Log.d("click","go back");
                 if (webview.canGoBack()) {
                     webview.goBack();
@@ -129,6 +135,7 @@ public class ControlCentre {
 //            Log.d("current url", currentPage);
         }
     } //end setup
+
 
 
     public boolean backButtonPressed(){
@@ -239,6 +246,22 @@ public class ControlCentre {
         if(imm != null){
             imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0);
         }
+    }
+
+    private void loadHistory(){
+        theActivity.setContentView(R.layout.listview);
+        listview = (ListView) theActivity.findViewById(R.id.listview);
+        ArrayList<String> arraylist = new ArrayList<>();
+
+        arraylist.add("this");
+        arraylist.add("is");
+        arraylist.add("a");
+        arraylist.add("listview");
+        arraylist.add("test");
+
+        //ArrayAdapter arrayadapter = new ArrayAdapter (R.layout.single_list_item.arraylist);
+
+
     }
 }
 

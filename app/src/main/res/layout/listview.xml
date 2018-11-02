@@ -1,64 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/urlText"
+        android:id="@+id/historyUrlText"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_toStartOf="@id/loadPageBtn"
+        android:layout_toStartOf="@id/loadHistBtn"
         android:ems="10"
-         />
+        />
+
 
     <ImageButton
-        android:id="@+id/loadPageBtn"
+        android:id="@+id/loadHistBtn"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         app:srcCompat="@drawable/ic_loadpage_icon" />
 
-    <WebView
-        android:id="@+id/mainwebview"
+    <ListView
+        android:id="@+id/listview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/urlText"
-        android:layout_above="@id/backBtn">
+        android:layout_below="@id/historyUrlText"
+        android:layout_above="@id/backLayBtn"/>
 
 
-    </WebView>
 
     <ImageButton
-        android:id="@+id/backBtn"
+        android:id="@+id/backLayBtn"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         app:srcCompat="@drawable/ic_back_icon" />
 
     <ImageButton
-        android:id="@+id/homeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@id/fwdBtn"
-        android:layout_toRightOf="@id/backBtn"
-        app:srcCompat="@drawable/ic_house_icon" />
-
-    <ImageButton
-        android:id="@+id/fwdBtn"
+        android:id="@+id/emptyHistBtn"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        app:srcCompat="@drawable/ic_forward_icon" />
+        app:srcCompat="@drawable/ic_delete_icon" />
 
 </RelativeLayout>
