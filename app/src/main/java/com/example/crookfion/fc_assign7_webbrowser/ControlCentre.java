@@ -2,11 +2,13 @@ package com.example.crookfion.fc_assign7_webbrowser;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebBackForwardList;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -36,11 +38,15 @@ public class ControlCentre {
     ImageButton emptyHistBtn;
     int selectedHist ;
 
-    String currentUrl="https://www.google.com";
+    String homeUrl = "https://www.google.com";
+    String currentUrl=homeUrl;
 
     ListView listview;
     ArrayList<Data> arraylist = new ArrayList<>();
     private ListViewCustomAdapter listAdapter;
+
+    WebBackForwardList webviewHistList;
+    Bundle bundle;
 
     ControlCentre(Activity activity){
         theActivity = activity;
@@ -55,6 +61,11 @@ public class ControlCentre {
 
         urlText = (EditText) theActivity.findViewById(R.id.urlText);
         webview = (WebView) theActivity.findViewById(R.id.mainwebview);
+
+        //restores bundle after layout change
+        if(bundle!=null){
+            webview.restoreState(bundle);
+        }
 
         backButton = (ImageButton) theActivity.findViewById(R.id.backBtn);
         homeButton = (ImageButton) theActivity.findViewById(R.id.homeBtn);
@@ -97,6 +108,10 @@ public class ControlCentre {
         backButton.setOnClickListener((new View.OnClickListener(){
             @Override
             public void onClick(View view){
+
+                //save the webview state before changing layout
+                bundle = new Bundle();
+                webview.saveState(bundle);
                 loadHistory();
 //                Log.d("click","go back");
 //                if (webview.canGoBack()) {
@@ -295,18 +310,34 @@ public class ControlCentre {
         loadHistBtn.setOnClickListener((new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                //closeKeyboard();
-                //Log.d("click","has clicked");
+
                 currentUrl = arraylist.get(selectedHist).getUrl();
                 setupMainLayout();
-                //theActivity.setContentView(R.layout.activity_main);
-//                Log.d("geturl","before load "+webview.getUrl());
-                //Log.d("geturl","before load "+currentUrl);
-                //webview.loadUrl(checkForHttp(url));
-                //Log.d("geturl","after load "+currentUrl);
 
             }
         }));
+
+        emptyHistBtn.setOnClickListener((new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+                arraylist.clear();
+
+                loadHistory();
+            }
+        }));
+
+        backLayBtn.setOnClickListener((new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+                //currentUrl = arraylist.get(selectedHist).getUrl();
+                setupMainLayout();
+
+            }
+        }));
+
+
     }
 }
 
