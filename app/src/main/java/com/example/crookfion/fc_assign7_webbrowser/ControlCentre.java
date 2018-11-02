@@ -10,11 +10,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -32,6 +35,8 @@ public class ControlCentre {
     String currentUrl="https://www.google.com";
 
     ListView listview;
+    ArrayList<Data> arraylist = new ArrayList<>();
+    private ListViewCustomAdapter listAdapter;
 
     ControlCentre(Activity activity){
         theActivity = activity;
@@ -87,16 +92,16 @@ public class ControlCentre {
         backButton.setOnClickListener((new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                //loadHistory();
-                Log.d("click","go back");
-                if (webview.canGoBack()) {
-                    webview.goBack();
-//                    Log.d("geturl","gone back "+webview.getUrl());
-//                    loadPageToBar();
-                }
-                //Log.d("current url",currentUrl);
-                Log.d("geturl","gone back "+currentUrl);
-                loadPageToBar();
+                loadHistory();
+//                Log.d("click","go back");
+//                if (webview.canGoBack()) {
+//                    webview.goBack();
+////                    Log.d("geturl","gone back "+webview.getUrl());
+////                    loadPageToBar();
+//                }
+//                //Log.d("current url",currentUrl);
+//                Log.d("geturl","gone back "+currentUrl);
+//                loadPageToBar();
             }
         }));
 
@@ -213,6 +218,10 @@ public class ControlCentre {
             Log.d("WebView", "your current url when webpage loading.. finish" + url);
             currentUrl=url;
             urlText.setText(currentUrl);
+
+            //load title and url into data arryalist with every page visited
+            Data pageData = new Data(view.getTitle(),url);
+            arraylist.add(pageData);
             super.onPageFinished(view, url);
         }
 
@@ -251,16 +260,26 @@ public class ControlCentre {
     private void loadHistory(){
         theActivity.setContentView(R.layout.listview);
         listview = (ListView) theActivity.findViewById(R.id.listview);
-        ArrayList<String> arraylist = new ArrayList<>();
 
-        arraylist.add("this");
-        arraylist.add("is");
-        arraylist.add("a");
-        arraylist.add("listview");
-        arraylist.add("test");
+//        ArrayAdapter arrayadapter = new ArrayAdapter (R.layout.single_list_item.arraylist);
+        listAdapter = new ListViewCustomAdapter(theActivity,arraylist);
+        listview.setAdapter(listAdapter);
 
-        //ArrayAdapter arrayadapter = new ArrayAdapter (R.layout.single_list_item.arraylist);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
+                //unhappy with this line
+                //Toast.makeText(theActivity, i, Toast.LENGTH_LONG).show();
+                Log.d("site",arraylist.get(i).getTitle());
+                TextView historyUrl = (TextView)theActivity.findViewById(R.id.historyUrlText);
+                historyUrl.setText(arraylist.get(i).getTitle());
+            }
 
+//            @Override
+//            public void OnItemClick(AdapterView<?> parent, View view, int position, long id){
+//                Toast.makeText(theActivity, position, Toast.LENGTH_LONG).show();
+//            }
+        });
 
     }
 }
