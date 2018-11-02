@@ -31,6 +31,10 @@ public class ControlCentre {
     ImageButton backButton;
     ImageButton homeButton;
     ImageButton fwdButton;
+    ImageButton loadHistBtn;
+    ImageButton backLayBtn;
+    ImageButton emptyHistBtn;
+    int selectedHist ;
 
     String currentUrl="https://www.google.com";
 
@@ -65,6 +69,7 @@ public class ControlCentre {
         //opens links within webview
         webview.setWebViewClient(new MyWebViewClient());
         //currentUrl = webview.getUrl();
+        webview.loadUrl(checkForHttp(currentUrl));
 
 
         loadPageButton.setOnClickListener((new View.OnClickListener(){
@@ -77,7 +82,7 @@ public class ControlCentre {
                 Log.d("geturl","before load "+currentUrl);
                 webview.loadUrl(checkForHttp(url));
                 Log.d("geturl","after load "+currentUrl);
-                loadPageToBar();
+//                loadPageToBar();
 //                String currentPage = webview.getUrl();
 //                urlText.setText(currentPage);
 //                Log.d("current url",currentPage);
@@ -112,7 +117,7 @@ public class ControlCentre {
                 webview.loadUrl("https://www.google.com");
                 //Log.d("current url",currentUrl);
                 Log.d("geturl","gone home "+currentUrl);
-                loadPageToBar();
+//                loadPageToBar();
 
             }
         }));
@@ -124,7 +129,7 @@ public class ControlCentre {
                 if (webview.canGoForward()) {
                     webview.goForward();
                     Log.d("geturl","gone forward "+currentUrl);
-                    loadPageToBar();
+//                    loadPageToBar();
                 }
                 //Log.d("current url",currentUrl);
             }
@@ -135,7 +140,7 @@ public class ControlCentre {
         if(webview.getUrl() !=null) {
             Log.d("geturl","loading page "+currentUrl);
 
-            loadPageToBar();
+//            loadPageToBar();
 //            String currentPage = webview.getUrl();
 //            Log.d("current url", currentPage);
         }
@@ -152,7 +157,7 @@ public class ControlCentre {
         }
 
         Log.d("geturl","gone back "+currentUrl);
-        loadPageToBar();
+//        loadPageToBar();
         return goesBack;
     }
 
@@ -180,7 +185,7 @@ public class ControlCentre {
         String newUrl;
 
         //if not a real url, do a google search of input
-        if(url.startsWith("http://www.") || url.startsWith("https://www.")){
+        if(url.startsWith("http://") || url.startsWith("https://")){
             newUrl=url;
         } else{
             newUrl="https://www.google.com/search?q="+url;
@@ -237,12 +242,12 @@ public class ControlCentre {
     }
 
     //prob don't need this, funtionality moved to onPageFinished
-    public void loadPageToBar(){
-        Log.d("existing url",urlText.getText().toString());
-        //String currentPage = webview.getUrl();
-        //urlText.setText(currentUrl);
-        Log.d("current url",currentUrl);
-    }
+//    public void loadPageToBar(){
+//        Log.d("existing url",urlText.getText().toString());
+//        //String currentPage = webview.getUrl();
+//        //urlText.setText(currentUrl);
+//        Log.d("current url",currentUrl);
+//    }
 
     private void closeKeyboard() {
         InputMethodManager inputManager = (InputMethodManager)theActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -260,6 +265,11 @@ public class ControlCentre {
     private void loadHistory(){
         theActivity.setContentView(R.layout.listview);
         listview = (ListView) theActivity.findViewById(R.id.listview);
+        loadHistBtn = (ImageButton)theActivity.findViewById(R.id.loadHistBtn);
+        backLayBtn = (ImageButton) theActivity.findViewById(R.id.backLayBtn);
+        emptyHistBtn = (ImageButton) theActivity.findViewById(R.id.emptyHistBtn);
+
+
 
 //        ArrayAdapter arrayadapter = new ArrayAdapter (R.layout.single_list_item.arraylist);
         listAdapter = new ListViewCustomAdapter(theActivity,arraylist);
@@ -273,6 +283,7 @@ public class ControlCentre {
                 Log.d("site",arraylist.get(i).getTitle());
                 TextView historyUrl = (TextView)theActivity.findViewById(R.id.historyUrlText);
                 historyUrl.setText(arraylist.get(i).getTitle());
+                selectedHist=i;
             }
 
 //            @Override
@@ -281,6 +292,21 @@ public class ControlCentre {
 //            }
         });
 
+        loadHistBtn.setOnClickListener((new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                //closeKeyboard();
+                //Log.d("click","has clicked");
+                currentUrl = arraylist.get(selectedHist).getUrl();
+                setupMainLayout();
+                //theActivity.setContentView(R.layout.activity_main);
+//                Log.d("geturl","before load "+webview.getUrl());
+                //Log.d("geturl","before load "+currentUrl);
+                //webview.loadUrl(checkForHttp(url));
+                //Log.d("geturl","after load "+currentUrl);
+
+            }
+        }));
     }
 }
 
