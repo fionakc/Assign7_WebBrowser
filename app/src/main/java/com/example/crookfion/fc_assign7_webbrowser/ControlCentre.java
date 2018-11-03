@@ -41,6 +41,7 @@ public class ControlCentre {
     ImageButton menuButton;
     int selectedHist ;
 
+
     String homeUrl = "https://www.google.com";
     String currentUrl="https://www.google.com";
 
@@ -59,12 +60,14 @@ public class ControlCentre {
 
         theActivity.setContentView(R.layout.activity_main);
         Log.d("layout","layout loaded");
+        Log.d("geturl","currentUrl1: "+currentUrl);
 
         if(hasEmptiedHist){
             webview.clearHistory();
             hasEmptiedHist=false;
         }
 
+        Log.d("geturl","currentUrl2: "+currentUrl);
         menuButton = (ImageButton) theActivity.findViewById(R.id.menuBtn);
         loadPageButton = (ImageButton) theActivity.findViewById(R.id.loadPageBtn);
 
@@ -75,7 +78,7 @@ public class ControlCentre {
         if(bundle!=null){
             webview.restoreState(bundle);
         }
-
+        Log.d("geturl","currentUrl3: "+currentUrl);
         backButton = (ImageButton) theActivity.findViewById(R.id.backBtn);
         homeButton = (ImageButton) theActivity.findViewById(R.id.homeBtn);
         fwdButton = (ImageButton) theActivity.findViewById(R.id.fwdBtn);
@@ -85,16 +88,19 @@ public class ControlCentre {
         webSettings.setJavaScriptEnabled(true);
 
         Log.d("pull","pulled");
-
+        Log.d("geturl","currentUrl4: "+currentUrl);
         //opens links within webview
         webview.setWebViewClient(new MyWebViewClient());
         currentUrl = webview.getUrl();
-//        if(currentUrl.equals(homeUrl)) {
-//            webview.loadUrl(checkForHttp(homeUrl));
-//        } else{
-            webview.loadUrl(checkForHttp(currentUrl));
-        //}
 
+//        if(currentUrl.matches(homeUrl)) {
+//            webview.loadUrl(checkForHttp(homeUrl));
+//        } //else{
+//        if(currentUrl==null) {
+//            webview.loadUrl(checkForHttp(homeUrl));
+//        }
+        //}
+        Log.d("geturl","currentUrl5: "+currentUrl);
         //open history layout
         menuButton.setOnClickListener((new View.OnClickListener(){
             @Override
