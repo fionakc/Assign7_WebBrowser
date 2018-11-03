@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
+        android:scaleType="fitCenter"
         app:srcCompat="@drawable/ic_loadpage_icon"
         tools:layout_editor_absoluteX="128dp"
         tools:layout_editor_absoluteY="0dp" />
@@ -41,18 +42,31 @@
         android:id="@+id/backBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:scaleType="fitCenter"
         app:srcCompat="@drawable/ic_back_icon" />
+
+
+    <ImageButton
+        android:id="@+id/menuBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/backBtn"
+
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/ic_hamburger_icon" />
 
     <ImageButton
         android:id="@+id/homeBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/fwdBtn"
-        android:layout_toRightOf="@id/backBtn"
         android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@id/fwdBtn"
+        android:layout_toEndOf="@id/menuBtn"
         android:contentDescription="Home Button"
+        android:scaleType="fitCenter"
         app:srcCompat="@drawable/ic_house_icon"
         tools:layout_editor_absoluteX="56dp"
         tools:layout_editor_absoluteY="132dp" />
@@ -61,8 +75,9 @@
         android:id="@+id/fwdBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:scaleType="fitCenter"
         app:srcCompat="@drawable/ic_forward_icon"
         tools:layout_editor_absoluteX="128dp"
         tools:layout_editor_absoluteY="132dp" />

@@ -12,6 +12,7 @@
         android:layout_height="60dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:scaleType="fitCenter"
         app:srcCompat="@drawable/ic_hamburger_icon" />
 
     <EditText
@@ -30,6 +31,7 @@
         android:layout_height="60dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:scaleType="fitCenter"
         app:srcCompat="@drawable/ic_loadpage_icon" />
 
     <WebView
@@ -50,6 +52,7 @@
         android:layout_height="60dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
+        android:scaleType="fitCenter"
         app:srcCompat="@drawable/ic_back_icon" />
 
     <ImageButton
@@ -59,6 +62,7 @@
         android:layout_alignParentBottom="true"
         android:layout_toStartOf="@id/fwdBtn"
         android:layout_toEndOf="@id/backBtn"
+        android:scaleType="fitCenter"
         app:srcCompat="@drawable/ic_house_icon" />
 
     <ImageButton
@@ -67,6 +71,7 @@
         android:layout_height="60dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:scaleType="fitCenter"
         app:srcCompat="@drawable/ic_forward_icon" />
 
 
