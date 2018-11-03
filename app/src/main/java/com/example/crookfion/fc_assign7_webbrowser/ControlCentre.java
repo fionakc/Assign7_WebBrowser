@@ -2,6 +2,7 @@ package com.example.crookfion.fc_assign7_webbrowser;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,8 @@ public class ControlCentre {
     ImageButton loadHistBtn;
     ImageButton backLayBtn;
     ImageButton emptyHistBtn;
+    boolean hasEmptiedHist=false;
+    ImageButton menuButton;
     int selectedHist ;
 
     String homeUrl = "https://www.google.com";
@@ -57,6 +60,12 @@ public class ControlCentre {
         theActivity.setContentView(R.layout.activity_main);
         Log.d("layout","layout loaded");
 
+        if(hasEmptiedHist){
+            webview.clearHistory();
+            hasEmptiedHist=false;
+        }
+
+        menuButton = (ImageButton) theActivity.findViewById(R.id.menuBtn);
         loadPageButton = (ImageButton) theActivity.findViewById(R.id.loadPageBtn);
 
         urlText = (EditText) theActivity.findViewById(R.id.urlText);
@@ -82,6 +91,20 @@ public class ControlCentre {
         //currentUrl = webview.getUrl();
         webview.loadUrl(checkForHttp(currentUrl));
 
+        //open history layout
+        menuButton.setOnClickListener((new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+
+                //save the webview state before changing layout
+                bundle = new Bundle();
+//                webviewHistList=webview.copyBackForwardList();
+//                bundle.put("history",webviewHistList);
+                webview.saveState(bundle);
+                loadHistory();
+
+            }
+        }));
 
         loadPageButton.setOnClickListener((new View.OnClickListener(){
             @Override
@@ -103,24 +126,18 @@ public class ControlCentre {
         }));
 
 
-
-        //repurpose temp to get listview to work
         backButton.setOnClickListener((new View.OnClickListener(){
             @Override
             public void onClick(View view){
 
-                //save the webview state before changing layout
-                bundle = new Bundle();
-                webview.saveState(bundle);
-                loadHistory();
-//                Log.d("click","go back");
-//                if (webview.canGoBack()) {
-//                    webview.goBack();
-////                    Log.d("geturl","gone back "+webview.getUrl());
-////                    loadPageToBar();
-//                }
-//                //Log.d("current url",currentUrl);
-//                Log.d("geturl","gone back "+currentUrl);
+                Log.d("click","go back");
+                if (webview.canGoBack()) {
+                    webview.goBack();
+//                    Log.d("geturl","gone back "+webview.getUrl());
+//                    loadPageToBar();
+                }
+                //Log.d("current url",currentUrl);
+                Log.d("geturl","gone back "+currentUrl);
 //                loadPageToBar();
             }
         }));
@@ -322,7 +339,7 @@ public class ControlCentre {
             public void onClick(View view){
 
                 arraylist.clear();
-
+                hasEmptiedHist=true;
                 loadHistory();
             }
         }));

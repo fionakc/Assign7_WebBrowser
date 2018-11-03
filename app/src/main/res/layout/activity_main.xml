@@ -6,13 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageButton
+        android:id="@+id/menuBtn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/ic_hamburger_icon" />
+
     <EditText
         android:id="@+id/urlText"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_toStartOf="@id/loadPageBtn"
+        android:layout_toEndOf="@id/menuBtn"
         android:ems="10"
          />
 
@@ -49,8 +57,8 @@
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@id/fwdBtn"
-        android:layout_toRightOf="@id/backBtn"
+        android:layout_toStartOf="@id/fwdBtn"
+        android:layout_toEndOf="@id/backBtn"
         app:srcCompat="@drawable/ic_house_icon" />
 
     <ImageButton
@@ -60,5 +68,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         app:srcCompat="@drawable/ic_forward_icon" />
+
+
 
 </RelativeLayout>
