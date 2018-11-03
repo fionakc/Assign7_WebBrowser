@@ -40,6 +40,7 @@ public class ControlCentre {
     boolean hasEmptiedHist=false;
     ImageButton menuButton;
     int selectedHist ;
+    boolean inHistLayout;
 
 
     String homeUrl = "https://www.google.com";
@@ -57,7 +58,7 @@ public class ControlCentre {
     }
 
     public void setupMainLayout(){
-
+        inHistLayout=false;
         theActivity.setContentView(R.layout.activity_main);
         Log.d("layout","layout loaded");
         Log.d("geturl","currentUrl1: "+currentUrl);
@@ -308,6 +309,7 @@ public class ControlCentre {
     }
 
     private void loadHistory(){
+        inHistLayout=true;
         theActivity.setContentView(R.layout.listview);
         listview = (ListView) theActivity.findViewById(R.id.listview);
         loadHistBtn = (ImageButton)theActivity.findViewById(R.id.loadHistBtn);
@@ -384,6 +386,10 @@ public class ControlCentre {
 
     public void setHistoryList(ArrayList history){
         arraylist=history;
+    }
+
+    public boolean inHistoryView(){
+        return inHistLayout;
     }
 }
 

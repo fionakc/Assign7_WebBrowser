@@ -93,7 +93,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         boolean goesBack = control.backButtonPressed();
-        if(!goesBack){
+        boolean inHistLayout=control.inHistoryView();
+        if(inHistLayout){
+            control.setupMainLayout();
+
+        } else if(!goesBack){
             super.onBackPressed();
         }
     }
