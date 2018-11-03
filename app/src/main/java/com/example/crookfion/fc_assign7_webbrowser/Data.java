@@ -1,6 +1,9 @@
 package com.example.crookfion.fc_assign7_webbrowser;
 
-public class Data {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Data implements Parcelable {
 
     private String title = "";
     private String url = "";
@@ -18,4 +21,13 @@ public class Data {
         return this.url;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+    }
 }

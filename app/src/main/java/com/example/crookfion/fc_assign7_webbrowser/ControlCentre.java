@@ -46,7 +46,7 @@ public class ControlCentre {
     String currentUrl="https://www.google.com";
 
     ListView listview;
-    ArrayList<Data> arraylist = new ArrayList<>();
+    ArrayList<Data> arraylist = new ArrayList<>(); //not getting save on restart because not part of the webview
     private ListViewCustomAdapter listAdapter;
 
 //    WebBackForwardList webviewHistList;
@@ -268,6 +268,9 @@ public class ControlCentre {
 
             //load title and url into data arryalist with every page visited
             Data pageData = new Data(view.getTitle(),url);
+            if(arraylist==null) {
+               arraylist=new ArrayList<>();
+            }
             arraylist.add(pageData);
             super.onPageFinished(view, url);
         }
@@ -365,6 +368,22 @@ public class ControlCentre {
         }));
 
 
+    }
+
+    public void changeLayoutToMain(){
+        theActivity.setContentView(R.layout.activity_main);
+    }
+
+    public void changeLayoutToHistory(){
+        theActivity.setContentView(R.layout.listview);
+    }
+
+    public ArrayList getHistoryList(){
+        return arraylist;
+    }
+
+    public void setHistoryList(ArrayList history){
+        arraylist=history;
     }
 }
 

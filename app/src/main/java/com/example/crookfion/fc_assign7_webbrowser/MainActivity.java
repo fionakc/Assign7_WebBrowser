@@ -10,6 +10,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,12 +43,19 @@ public class MainActivity extends AppCompatActivity {
 ////        Log.d("onSaveInst",urlToSave);
 ////
 ////    }
+
+    //code adapted from multiple websites
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+
+//        control.changeLayoutToMain();
         Bundle bundle = new Bundle();
         ((WebView) findViewById(R.id.mainwebview)).saveState(bundle);
         outState.putBundle("webViewState", bundle);
+        outState.putParcelableArrayList("historyArraylist",control.getHistoryList());
+//        control.changeLayoutToHistory();
+//        outState.putParcelable("listViewState", ((ListView)findViewById(R.id.listview)).onSaveInstanceState());
         Log.d("onSaveInst","new save inst");
     }
 
@@ -63,13 +71,20 @@ public class MainActivity extends AppCompatActivity {
 //        Log.d("onRestInst", url);
 //
 //    }
+
+    //code adapted from several websites
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        if (savedInstanceState != null)
+        if (savedInstanceState != null){
+//            control.changeLayoutToMain();
             ((WebView) findViewById(R.id.mainwebview)).restoreState(savedInstanceState.getBundle("webViewState"));
-        else {
+            control.setHistoryList(savedInstanceState.getParcelableArrayList("historyArrayList"));
+//            control.changeLayoutToHistory();
+//            ((ListView)findViewById(R.id.listview)).onRestoreInstanceState(savedInstanceState.getParcelable("listViewState"));
+    } else {
+            //control.changeLayoutToMain();
 //            webView = (WebView) findViewById(R.id.mainwebview);
 //            webView.loadUrl("https://www.YAHOO.com/");
             control.setUrl("https://www.google.com");
