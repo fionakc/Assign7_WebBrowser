@@ -42,13 +42,13 @@ public class ControlCentre {
     int selectedHist ;
 
     String homeUrl = "https://www.google.com";
-    String currentUrl=homeUrl;
+    String currentUrl="https://www.google.com";
 
     ListView listview;
     ArrayList<Data> arraylist = new ArrayList<>();
     private ListViewCustomAdapter listAdapter;
 
-    WebBackForwardList webviewHistList;
+//    WebBackForwardList webviewHistList;
     Bundle bundle;
 
     ControlCentre(Activity activity){
@@ -88,8 +88,12 @@ public class ControlCentre {
 
         //opens links within webview
         webview.setWebViewClient(new MyWebViewClient());
-        //currentUrl = webview.getUrl();
-        webview.loadUrl(checkForHttp(currentUrl));
+        currentUrl = webview.getUrl();
+//        if(currentUrl.equals(homeUrl)) {
+//            webview.loadUrl(checkForHttp(homeUrl));
+//        } else{
+            webview.loadUrl(checkForHttp(currentUrl));
+        //}
 
         //open history layout
         menuButton.setOnClickListener((new View.OnClickListener(){
