@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     ControlCentre control;
@@ -59,8 +61,10 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         ((WebView) findViewById(R.id.mainwebview)).saveState(bundle);
         outState.putBundle("webViewState", bundle);
-//        outState.putParcelableArrayList("historyArraylist",control.getHistoryList());
-//        control.changeLayoutToHistory();
+        outState.putParcelableArrayList("historyArraylist",control.getHistoryList());
+
+        //these two lines not doing it
+//        control.loadHistory();
 //        outState.putParcelable("listViewState", ((ListView)findViewById(R.id.listview)).onSaveInstanceState());
         Log.d("onSaveInst","new save inst");
     }
@@ -85,10 +89,18 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState != null){
 //            control.changeLayoutToMain();
-            ((WebView) findViewById(R.id.mainwebview)).restoreState(savedInstanceState.getBundle("webViewState"));
-//            control.setHistoryList(savedInstanceState.getParcelableArrayList("historyArrayList"));
-//            control.changeLayoutToHistory();
+
+            ArrayList <Data> historyList = savedInstanceState.getParcelableArrayList("historyArrayList");
+            if(historyList!=null) {
+                control.setHistoryList(historyList);
+            }
+
+            //these three lines not doing it
+//            control.loadHistory();
 //            ((ListView)findViewById(R.id.listview)).onRestoreInstanceState(savedInstanceState.getParcelable("listViewState"));
+//            control.setupMainLayout();
+
+            ((WebView) findViewById(R.id.mainwebview)).restoreState(savedInstanceState.getBundle("webViewState"));
     } else {
             //control.changeLayoutToMain();
 //            webView = (WebView) findViewById(R.id.mainwebview);

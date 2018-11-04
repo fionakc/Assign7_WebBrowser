@@ -336,7 +336,7 @@ public class ControlCentre {
         }
     }
 
-    private void loadHistory(){
+    public void loadHistory(){
         inHistLayout=true;
         theActivity.setContentView(R.layout.listview);
         listview = (ListView) theActivity.findViewById(R.id.listview);
