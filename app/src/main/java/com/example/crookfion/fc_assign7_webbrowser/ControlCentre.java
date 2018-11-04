@@ -11,6 +11,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebBackForwardList;
@@ -41,12 +42,14 @@ public class ControlCentre {
     private ImageButton backLayBtn;
     private ImageButton emptyHistBtn;
     private ImageButton menuButton;
+    private EditText historyUrlText;
 
     private boolean hasEmptiedHist=false;
     private int selectedHist ;
     private boolean inHistLayout;
     private boolean loadHistPage=false;
 
+    private String homeUrl = "https://www.google.com";
     private String currentUrl="https://www.google.com";
 
     private ListView listview;
@@ -64,6 +67,7 @@ public class ControlCentre {
 
     //initialises the Main layout
     public void setupMainLayout(){
+
         inHistLayout=false;
         theActivity.setContentView(R.layout.activity_main);
 
@@ -82,8 +86,9 @@ public class ControlCentre {
         }
 
         //if have emptied page history arraylist, clear list from webview also
-        //this is currently not working correctly
+        //clearHistory is currently not working correctly, unknown reason why
         if(hasEmptiedHist){
+
             webview.clearHistory();
             hasEmptiedHist=false;
 
@@ -117,6 +122,29 @@ public class ControlCentre {
             }
         }));
 
+        //keylistener to load selected page if enter key pressed
+        urlText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+
+                    //close the soft keyboard
+                    closeKeyboard();
+
+                    loadPageButton.requestFocus();
+                    //get url from urlText field, load into webview after checking for http
+                    String url = urlText.getText().toString();
+                    webview.loadUrl(checkForHttp(url));
+
+                    return true;
+
+                }
+                return false;
+            }
+        });
+
+
         //button listener to load selected page
         loadPageButton.setOnClickListener((new View.OnClickListener(){
             @Override
@@ -131,7 +159,6 @@ public class ControlCentre {
             }
         }));
 
-
         //button listener to go back a page if available
         backButton.setOnClickListener((new View.OnClickListener(){
             @Override
@@ -143,12 +170,12 @@ public class ControlCentre {
             }
         }));
 
-        //button listener to load the home page (hardcoded)
+        //button listener to load the home page
         homeButton.setOnClickListener((new View.OnClickListener(){
             @Override
             public void onClick(View view){
 
-                webview.loadUrl("https://www.google.com");
+                webview.loadUrl(homeUrl);
             }
         }));
 
@@ -195,7 +222,13 @@ public class ControlCentre {
         //if not a real url, do a google search of input
         if(url.startsWith("http://") || url.startsWith("https://")){
             newUrl=url;
-        } else{
+        } else if(url.startsWith("www.")) {
+            //expect an auto redirect to https if supported by webpage
+            //note: some webpages throw a ClearText error if redirect does not occur automatically,
+            //but webpage requires a https connection
+            //there should probably be a try/catch statement here
+            newUrl = "http://"+url;
+        }else{
             newUrl="https://www.google.com/search?q="+url;
         }
 
@@ -234,7 +267,7 @@ public class ControlCentre {
             //down here because need page to finish loading before can grab title
             Data pageData = new Data(view.getTitle(),url);
 
-            arraylist.add(pageData);
+            arraylist.add(0,pageData);
             super.onPageFinished(view, url);
         }
 
@@ -257,6 +290,7 @@ public class ControlCentre {
 
         //call the layout components
         listview = (ListView) theActivity.findViewById(R.id.listview);
+        historyUrlText = (EditText) theActivity.findViewById(R.id.historyUrlText);
         loadHistBtn = (ImageButton)theActivity.findViewById(R.id.loadHistBtn);
         backLayBtn = (ImageButton) theActivity.findViewById(R.id.backLayBtn);
         emptyHistBtn = (ImageButton) theActivity.findViewById(R.id.emptyHistBtn);
@@ -280,6 +314,25 @@ public class ControlCentre {
 //            public void OnItemClick(AdapterView<?> parent, View view, int position, long id){
 //                Toast.makeText(theActivity, position, Toast.LENGTH_LONG).show();
 //            }
+        });
+
+
+        //keylistener to load selected page if enter key pressed
+        //must bring focus to edit text box by clicking into it first
+        historyUrlText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+
+                    loadHistPage=true;
+                    setupMainLayout();
+
+                    return true;
+
+                }
+                return false;
+            }
         });
 
         //button listener to load selected page
@@ -325,7 +378,7 @@ public class ControlCentre {
 
     //repopulates the page history arraylist, called from MainActivity.onRestoreState
     public void reloadPageHistory(){
-
+        Log.d("listsize1",Integer.toString(webview.copyBackForwardList().getSize()));
             WebBackForwardList webviewHistList = webview.copyBackForwardList();
             int listSize = webviewHistList.getSize();
             for(int i = 0; i < listSize; i++)
@@ -334,10 +387,11 @@ public class ControlCentre {
                 String title = webHistoryItem.getTitle();
                 String url = webHistoryItem.getUrl();
                 Data pageData = new Data(title,url);
-                arraylist.add(pageData);
-
+                arraylist.add(0,pageData);
+Log.d("listsize1",Integer.toString(webview.copyBackForwardList().getSize()));
             }
     }
+
 
 }
 
