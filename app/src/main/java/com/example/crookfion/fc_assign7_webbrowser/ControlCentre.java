@@ -2,6 +2,7 @@ package com.example.crookfion.fc_assign7_webbrowser;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,6 +42,9 @@ public class ControlCentre {
     ImageButton menuButton;
     int selectedHist ;
     boolean inHistLayout;
+    boolean loadHistPage=false;
+
+    Bitmap bitmap ;
 
 
     String homeUrl = "https://www.google.com";
@@ -93,6 +97,13 @@ public class ControlCentre {
         //opens links within webview
         webview.setWebViewClient(new MyWebViewClient());
         currentUrl = webview.getUrl();
+        //load selected page from history view
+
+        if(loadHistPage){
+            currentUrl = arraylist.get(selectedHist).getUrl();
+            webview.loadUrl(currentUrl);
+            loadHistPage=false;
+        }
 
 //        if(currentUrl.matches(homeUrl)) {
 //            webview.loadUrl(checkForHttp(homeUrl));
@@ -262,19 +273,34 @@ public class ControlCentre {
         }
 
         @Override
-        public void onPageFinished(WebView view, String url) {
+        public void onPageStarted(WebView view, String url, Bitmap bitmap) {
+//        public void onPageFinished(WebView view, String url) {
             Log.d("WebView", "your current url when webpage loading.. finish" + url);
             currentUrl=url;
             urlText.setText(currentUrl);
 
             //load title and url into data arryalist with every page visited
+//            Data pageData = new Data(view.getTitle(),url);
+////            if(arraylist==null) {
+////               arraylist=new ArrayList<>();
+////            }
+//            arraylist.add(pageData);
+            super.onPageStarted(view, url, bitmap);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+
+            currentUrl=url;
+            urlText.setText(currentUrl);
             Data pageData = new Data(view.getTitle(),url);
-            if(arraylist==null) {
-               arraylist=new ArrayList<>();
-            }
+//            if(arraylist==null) {
+//               arraylist=new ArrayList<>();
+//            }
             arraylist.add(pageData);
             super.onPageFinished(view, url);
         }
+
 
         //this method works instead of onPageFinished, but doesn't give as nice of a urltext experience
         //and maybe causes the emulator to crash
@@ -342,8 +368,8 @@ public class ControlCentre {
         loadHistBtn.setOnClickListener((new View.OnClickListener(){
             @Override
             public void onClick(View view){
-
-                currentUrl = arraylist.get(selectedHist).getUrl();
+                loadHistPage=true;
+//                currentUrl = arraylist.get(selectedHist).getUrl();
                 setupMainLayout();
 
             }

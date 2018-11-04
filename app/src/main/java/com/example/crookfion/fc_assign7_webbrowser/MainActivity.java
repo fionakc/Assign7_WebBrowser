@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         ((WebView) findViewById(R.id.mainwebview)).saveState(bundle);
         outState.putBundle("webViewState", bundle);
-        outState.putParcelableArrayList("historyArraylist",control.getHistoryList());
+//        outState.putParcelableArrayList("historyArraylist",control.getHistoryList());
 //        control.changeLayoutToHistory();
 //        outState.putParcelable("listViewState", ((ListView)findViewById(R.id.listview)).onSaveInstanceState());
         Log.d("onSaveInst","new save inst");
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState != null){
 //            control.changeLayoutToMain();
             ((WebView) findViewById(R.id.mainwebview)).restoreState(savedInstanceState.getBundle("webViewState"));
-            control.setHistoryList(savedInstanceState.getParcelableArrayList("historyArrayList"));
+//            control.setHistoryList(savedInstanceState.getParcelableArrayList("historyArrayList"));
 //            control.changeLayoutToHistory();
 //            ((ListView)findViewById(R.id.listview)).onRestoreInstanceState(savedInstanceState.getParcelable("listViewState"));
     } else {
