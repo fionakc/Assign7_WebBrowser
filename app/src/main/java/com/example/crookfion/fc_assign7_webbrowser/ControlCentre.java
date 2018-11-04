@@ -42,7 +42,6 @@ public class ControlCentre {
     private ImageButton backLayBtn;
     private ImageButton emptyHistBtn;
     private ImageButton menuButton;
-    private EditText historyUrlText;
 
     private boolean hasEmptiedHist=false;
     private int selectedHist ;
@@ -50,6 +49,7 @@ public class ControlCentre {
     private boolean loadHistPage=false;
 
     private String homeUrl = "https://www.google.com";
+    private String homeTitle = "Google";
     private String currentUrl="https://www.google.com";
 
     private ListView listview;
@@ -267,6 +267,7 @@ public class ControlCentre {
             //down here because need page to finish loading before can grab title
             Data pageData = new Data(view.getTitle(),url);
 
+            //pages are added in reverse order, so most recently visited is at the top
             arraylist.add(0,pageData);
             super.onPageFinished(view, url);
         }
@@ -290,7 +291,6 @@ public class ControlCentre {
 
         //call the layout components
         listview = (ListView) theActivity.findViewById(R.id.listview);
-        historyUrlText = (EditText) theActivity.findViewById(R.id.historyUrlText);
         loadHistBtn = (ImageButton)theActivity.findViewById(R.id.loadHistBtn);
         backLayBtn = (ImageButton) theActivity.findViewById(R.id.backLayBtn);
         emptyHistBtn = (ImageButton) theActivity.findViewById(R.id.emptyHistBtn);
@@ -316,29 +316,14 @@ public class ControlCentre {
 //            }
         });
 
-
-        //keylistener to load selected page if enter key pressed
-        //must bring focus to edit text box by clicking into it first
-        historyUrlText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-
-                    loadHistPage=true;
-                    setupMainLayout();
-
-                    return true;
-
-                }
-                return false;
-            }
-        });
-
         //button listener to load selected page
         loadHistBtn.setOnClickListener((new View.OnClickListener(){
             @Override
             public void onClick(View view){
+                if(arraylist.size()==0){
+                    Data pageData = new Data(homeTitle,homeUrl);
+                    arraylist.add(0,pageData);
+                }
                 loadHistPage=true;
                 setupMainLayout();
 
@@ -352,7 +337,6 @@ public class ControlCentre {
 
                 arraylist.clear();
                 hasEmptiedHist=true;
-                Log.d("hasEmptiedHist",Boolean.toString(hasEmptiedHist));
                 loadHistory();
             }
         }));
@@ -363,7 +347,6 @@ public class ControlCentre {
             public void onClick(View view){
 
                 setupMainLayout();
-
             }
         }));
 
@@ -378,7 +361,7 @@ public class ControlCentre {
 
     //repopulates the page history arraylist, called from MainActivity.onRestoreState
     public void reloadPageHistory(){
-        Log.d("listsize1",Integer.toString(webview.copyBackForwardList().getSize()));
+
             WebBackForwardList webviewHistList = webview.copyBackForwardList();
             int listSize = webviewHistList.getSize();
             for(int i = 0; i < listSize; i++)
@@ -388,7 +371,7 @@ public class ControlCentre {
                 String url = webHistoryItem.getUrl();
                 Data pageData = new Data(title,url);
                 arraylist.add(0,pageData);
-Log.d("listsize1",Integer.toString(webview.copyBackForwardList().getSize()));
+
             }
     }
 

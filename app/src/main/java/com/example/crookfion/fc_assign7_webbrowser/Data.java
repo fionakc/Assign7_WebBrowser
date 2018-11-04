@@ -8,6 +8,9 @@ package com.example.crookfion.fc_assign7_webbrowser;
 
 //holds the data for the listview
 //holds two strings, the webpage Title, and webpage Url
+
+//with more time, could expand this out to also hold date and time page was visited,
+//to make list view easier to follow
 public class Data  {
 
     private String title = "";
