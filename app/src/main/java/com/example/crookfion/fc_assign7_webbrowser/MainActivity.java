@@ -1,19 +1,15 @@
+/**
+ * SWEN502 - Assignment 7 - Web Browser
+ * Fiona Crook
+ * 300442873
+ */
+
 package com.example.crookfion.fc_assign7_webbrowser;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,91 +19,55 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        getSupportActionBar().hide();
+        //hides top ActionBar
         this.getSupportActionBar().hide();
 
+        //creates and sets up the main browser layout
         control = new ControlCentre(this);
         control.setupMainLayout();
     }
 
-//    @Override
-////    public void onSaveInstanceState(Bundle outState) {
-////
-////        super.onSaveInstanceState(outState);
-////        String urlToSave=control.getUrl();
-////
-////        outState.putString("Url",urlToSave);
-////
-////        Log.d("onSaveInst",urlToSave);
-////
-////    }
 
-    //code adapted from multiple websites
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        //***need to make sure in main layout before can save
-        //control.changeLayoutToMain();     //this line won't do it.
-
+        //check if in History layout
         boolean inHistLayout=control.inHistoryView();
+
+        //if in History Layout, load Main layout
         if(inHistLayout) {
             control.setupMainLayout();
         }
+
+        //code adapted from a stackoverflow post
+        //save webview state as a bundle, save into a bundle
         Bundle bundle = new Bundle();
         ((WebView) findViewById(R.id.mainwebview)).saveState(bundle);
         outState.putBundle("webViewState", bundle);
-        outState.putParcelableArrayList("historyArraylist",control.getHistoryList());
 
-        //these two lines not doing it
-//        control.loadHistory();
-//        outState.putParcelable("listViewState", ((ListView)findViewById(R.id.listview)).onSaveInstanceState());
-        Log.d("onSaveInst","new save inst");
     }
 
-//    @Override
-//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//        //control.resetLayout();
-//        String url = savedInstanceState.getString("Url");
-//
-//
-//        control.setUrl(url);
-//
-//        Log.d("onRestInst", url);
-//
-//    }
 
-    //code adapted from several websites
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
+        //code adapted from a stackoverflow post
+        //if there is something in the bundle to restore
         if (savedInstanceState != null){
-//            control.changeLayoutToMain();
 
-            ArrayList <Data> historyList = savedInstanceState.getParcelableArrayList("historyArrayList");
-            if(historyList!=null) {
-                control.setHistoryList(historyList);
-            }
-
-            //these three lines not doing it
-//            control.loadHistory();
-//            ((ListView)findViewById(R.id.listview)).onRestoreInstanceState(savedInstanceState.getParcelable("listViewState"));
-//            control.setupMainLayout();
-
+            //restore the webview bundle
             ((WebView) findViewById(R.id.mainwebview)).restoreState(savedInstanceState.getBundle("webViewState"));
+            control.reloadPageHistory();
     } else {
-            //control.changeLayoutToMain();
-//            webView = (WebView) findViewById(R.id.mainwebview);
-//            webView.loadUrl("https://www.YAHOO.com/");
+
+            //otherwise, load google search page
             control.setUrl("https://www.google.com");
         }
     }
+
+
     @Override
     public void onBackPressed() {
         boolean goesBack = control.backButtonPressed();

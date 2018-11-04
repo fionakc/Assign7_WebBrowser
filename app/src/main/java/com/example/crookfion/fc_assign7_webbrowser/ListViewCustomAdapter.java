@@ -1,3 +1,9 @@
+/**
+ * SWEN502 - Assignment 7 - Web Browser
+ * Fiona Crook
+ * 300442873
+ */
+
 package com.example.crookfion.fc_assign7_webbrowser;
 
 import android.app.Activity;
@@ -10,6 +16,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+//code adapted from Karsten's slides on impelmenting listview
 public class ListViewCustomAdapter extends BaseAdapter {
 
     private List<Data> itemList;

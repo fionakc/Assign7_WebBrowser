@@ -1,9 +1,14 @@
+/**
+ * SWEN502 - Assignment 7 - Web Browser
+ * Fiona Crook
+ * 300442873
+ */
+
 package com.example.crookfion.fc_assign7_webbrowser;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-public class Data implements Parcelable {
+//holds the data for the listview
+//holds two strings, the webpage Title, and webpage Url
+public class Data  {
 
     private String title = "";
     private String url = "";
@@ -21,13 +26,5 @@ public class Data implements Parcelable {
         return this.url;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-
-    }
 }

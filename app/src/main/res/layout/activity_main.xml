@@ -24,7 +24,8 @@
         android:layout_toStartOf="@id/loadPageBtn"
         android:layout_toEndOf="@id/menuBtn"
         android:ems="10"
-        android:hint="@string/enter_url" />
+        android:hint="@string/enter_url"
+        android:singleLine="true"/>
 
     <ImageButton
         android:id="@+id/loadPageBtn"
