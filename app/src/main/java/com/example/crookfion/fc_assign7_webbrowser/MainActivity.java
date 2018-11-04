@@ -49,7 +49,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-//        control.changeLayoutToMain();
+        //***need to make sure in main layout before can save
+        //control.changeLayoutToMain();     //this line won't do it.
+
+        boolean inHistLayout=control.inHistoryView();
+        if(inHistLayout) {
+            control.setupMainLayout();
+        }
         Bundle bundle = new Bundle();
         ((WebView) findViewById(R.id.mainwebview)).saveState(bundle);
         outState.putBundle("webViewState", bundle);
