@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">FC_Assign7_WebBrowser</string>
+    <string name="enter_url">Enter url</string>
+    <string name="page_back_button">Page Back Button</string>
+    <string name="load_selected_page_button">Load Selected Page Button</string>
+    <string name="open_page_history_button">Open Page History Button</string>
+    <string name="load_home_page_button">Load Home Page Button</string>
+    <string name="page_forward_button">Page Forward Button</string>
+    <string name="exit_history_view">Exit Page History View</string>
+    <string name="clear_page_history">Clear Page History</string>
 </resources>

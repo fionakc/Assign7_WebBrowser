@@ -276,6 +276,7 @@ public class ControlCentre {
         public void onPageStarted(WebView view, String url, Bitmap bitmap) {
 //        public void onPageFinished(WebView view, String url) {
             Log.d("WebView", "your current url when webpage loading.. finish" + url);
+            //so urltext loads before page finishes loading
             currentUrl=url;
             urlText.setText(currentUrl);
 
@@ -293,6 +294,7 @@ public class ControlCentre {
 
             currentUrl=url;
             urlText.setText(currentUrl);
+            //down here because need page to finish loading before can grab title
             Data pageData = new Data(view.getTitle(),url);
 //            if(arraylist==null) {
 //               arraylist=new ArrayList<>();
